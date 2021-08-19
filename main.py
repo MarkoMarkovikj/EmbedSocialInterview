@@ -36,6 +36,11 @@ def filter_by_min_rating(reviews, min_rating):
     return list(filter(lambda r: r['rating'] >= min_rating, reviews))
 
 
+def save_as_json(filtered_reviews):
+    with open('filtered_reviews.json', 'w') as file:
+        json.dump(filtered_reviews, file)
+
+
 def filter_reviews(order_by_rating, min_rating, order_by_date, prioritize_by_text, window):
     reviews = load_reviews()
 
@@ -43,7 +48,8 @@ def filter_reviews(order_by_rating, min_rating, order_by_date, prioritize_by_tex
     filter_by_date(filtered_reviews, order_by_date)
     filter_by_rating(filtered_reviews, order_by_rating)
     filter_by_text(filtered_reviews, prioritize_by_text)
-
+    
+    save_as_json(filtered_reviews)
     run(filtered_reviews, window)
 
 
